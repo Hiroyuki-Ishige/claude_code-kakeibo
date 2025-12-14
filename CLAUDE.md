@@ -51,6 +51,26 @@ Key requirements:
   - Interaction states (hover, focus, active)
   - Responsive design breakpoints
 
+## Tailwind CSS Setup
+
+**IMPORTANT**: For Tailwind CSS v4 configuration, setup, and troubleshooting, refer to the comprehensive guide in `kakeibo/.claude/tailwind_document.md`.
+
+**Critical Requirements**:
+
+- **DO NOT** create `tailwind.config.js/ts` (v4 uses zero-configuration)
+- **USE** `@import "tailwindcss"` in CSS files (NOT `@tailwind` directives)
+- Use default Tailwind utility classes - avoid custom CSS definitions
+- Configure PostCSS with `@tailwindcss/postcss` plugin only
+
+Key topics covered in the Tailwind guide:
+
+- Zero-configuration setup for v4
+- Migration from v3 to v4 (breaking changes)
+- PostCSS configuration
+- Shadcn UI integration with v4
+- Custom theming with `@theme inline` directive
+- Common troubleshooting issues
+
 ## Supabase Database
 
 **IMPORTANT**: For all Supabase-related tasks, including database setup, migrations, CRUD operations, RLS policies, and authentication integration, refer to the comprehensive guide in `kakeibo/.claude/spabase_document.md`.
