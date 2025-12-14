@@ -83,6 +83,21 @@ Key topics covered in the Clerk guide:
 - Webhook handling
 - Role-based access control
 
+## Clerk & Supabase Integration
+
+**IMPORTANT**: For tasks involving both Clerk authentication and Supabase database access, especially Row Level Security (RLS) implementation, refer to the comprehensive integration guide in `kakeibo/.claude/clerk_superbase_integration_document.md`.
+
+**Recommended Approach**: Use **Service Role Key with Server-Side Filtering** for most reliable implementation across all environments.
+
+Key topics covered in the integration guide:
+
+- RLS integration strategies (Custom Header vs JWT vs Service Role)
+- Environment-specific implementations (Cloud-based vs Docker CLI)
+- User ID format handling (Clerk String vs Supabase UUID)
+- Security best practices for API Routes
+- Troubleshooting common RLS issues
+- Production deployment checklist
+
 ## Configuration
 
 - `tsconfig.json` - TypeScript configuration with strict mode enabled, target ES2017
