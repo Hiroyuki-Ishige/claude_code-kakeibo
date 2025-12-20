@@ -136,7 +136,7 @@ Key topics covered in the Tailwind guide:
 
 ## Supabase Database
 
-**IMPORTANT**: For all Supabase-related tasks, including database setup, migrations, CRUD operations, RLS policies, and authentication integration, refer to the comprehensive guide in `kakeibo/.claude/spabase_document.md`.
+**IMPORTANT**: For all Supabase-related tasks, including database setup, migrations, CRUD operations, RLS policies, and authentication integration, refer to the comprehensive guide in `kakeibo/.claude/supabase_document.md`.
 
 **Development Environment**: This project uses **方法 1 (Method 1): クラウドベース (Cloud-based)** approach. Do NOT use Docker Desktop or local Supabase setup.
 
@@ -151,6 +151,28 @@ Key topics covered in the Supabase guide:
 - File storage
 - Production deployment
 - Troubleshooting
+
+### Supabase Commands
+
+```bash
+# Create a new migration file
+npx supabase migration new <migration_name>
+
+# Login to Supabase (required before linking)
+npx supabase login
+
+# Link to cloud project
+npx supabase link --project-ref <project_id>
+
+# Push migrations to cloud
+npx supabase db push
+
+# Check migration status
+npx supabase migration list
+
+# Generate TypeScript types from database schema
+npx supabase gen types typescript > lib/database.types.ts
+```
 
 ## Authentication, Subscription & Payment
 
@@ -244,6 +266,22 @@ ALTER TABLE expenses ENABLE ROW LEVEL SECURITY;
 
 ## Development Workflow
 
+### Development Roadmap
+
+Development follows the phased approach defined in `.claude/development_roadmap.md`:
+
+**Phase 1**: Core infrastructure and authentication (✅ COMPLETED)
+**Phase 2**: Expense management features
+**Phase 3**: Dashboard and basic UI
+**Phase 4**: Premium features
+**Phase 5**: Deployment
+
+### Task Management
+
+When working on tasks, update the TODO list in `.claude/development_roadmap.md`:
+- Mark as `[x]` when completed
+- Keep checklist updated to track progress
+
 ### Important Implementation Rules
 
 **DO**:
@@ -304,9 +342,51 @@ Wrap premium features with access control:
 - Display analytics and charts only for premium users
 - Use `<PremiumGate>` component for conditional rendering
 
+## Architecture
+
+### Middleware Configuration
+
+The `middleware.ts` file configures route protection:
+
+```typescript
+import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
+
+const isPublicRoute = createRouteMatcher([
+  '/',
+  '/sign-in(.*)',
+  '/sign-up(.*)',
+  '/pricing',
+]);
+
+export default clerkMiddleware(async (auth, request) => {
+  if (!isPublicRoute(request)) {
+    await auth.protect();
+  }
+});
+```
+
+- Public routes: `/`, `/sign-in`, `/sign-up`, `/pricing`
+- All other routes require authentication
+- Middleware runs on all routes except static files and Next.js internals
+
+### Supabase Client Architecture
+
+Two clients are configured in `lib/supabase.ts`:
+
+1. **Client-side client** (`supabase`): Uses anon key, for client components
+2. **Server-side admin client** (`supabaseAdmin`): Uses service role key, bypasses RLS
+
+Helper functions for CRUD operations:
+- `getExpensesForUser(userId)` - Fetch user's expenses
+- `createExpenseForUser(userId, data)` - Create expense
+- `updateExpenseForUser(userId, id, updates)` - Update expense
+- `deleteExpenseForUser(userId, id)` - Delete expense
+
+All helpers include user ID filtering for security.
+
 ## Development Plan
 
-For a comprehensive development roadmap, see `.claude/development_plan.md`. The plan includes:
+For a comprehensive development roadmap, see `.claude/development_roadmap.md`. The plan includes:
 
 - **Phase 1-3**: Setup, database, and core infrastructure
 - **Phase 4-7**: Public pages, expense recording, and basic dashboard
@@ -315,7 +395,7 @@ For a comprehensive development roadmap, see `.claude/development_plan.md`. The 
 
 ### Using the Development Plan
 
-**IMPORTANT**: When working on tasks, always update the TODO list in `.claude/development_plan.md`:
+**IMPORTANT**: When working on tasks, always update the TODO list in `.claude/development_roadmap.md`:
 
 1. **Mark as WIP**: Change `- [ ]` to `- [WIP]` when you start working on a task
 2. **Mark as complete**: Change `- [WIP]` to `- [x]` when the task is finished
@@ -349,9 +429,9 @@ Example workflow:
 ## Reference Documentation
 
 - **Requirements**: `.claude/requirment.md` - Complete feature specifications
-- **Development Plan**: `.claude/development_plan.md` - Phase-by-phase implementation guide
+- **Development Plan**: `.claude/development_roadmap.md` - Phase-by-phase implementation guide
 - **Design System**: `.claude/design_system.md` - UI/UX guidelines
 - **Tailwind Guide**: `.claude/tailwind_document.md` - Tailwind CSS v4 setup
-- **Supabase Guide**: `.claude/spabase_document.md` - Database operations
+- **Supabase Guide**: `.claude/supabase_document.md` - Database operations
 - **Clerk Guide**: `.claude/clerk_document.md` - Authentication & billing
 - **Integration Guide**: `.claude/clerk_superbase_integration_document.md` - Clerk + Supabase RLS

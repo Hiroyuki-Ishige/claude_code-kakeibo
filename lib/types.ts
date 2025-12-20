@@ -1,17 +1,43 @@
 import { ExpenseCategory } from './constants';
 
 /**
+ * ユーザー（データベーススキーマ）
+ */
+export interface User {
+  id: string;
+  email: string;
+  name: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+/**
+ * カテゴリ（データベーススキーマ）
+ */
+export interface Category {
+  id: string;
+  name: ExpenseCategory;
+  icon: string;
+  color: string;
+  display_order: number;
+  created_at: string;
+}
+
+/**
  * 支出レコード（データベーススキーマ）
  */
 export interface Expense {
   id: string;
   user_id: string;
   amount: number;
-  category: ExpenseCategory;
+  category_id: string;
   date: string; // YYYY-MM-DD format
   note: string | null;
   created_at: string;
   updated_at: string;
+  // リレーション（JOIN時に取得）
+  category?: Category;
+  user?: User;
 }
 
 /**
@@ -19,7 +45,7 @@ export interface Expense {
  */
 export interface CreateExpenseInput {
   amount: number;
-  category: ExpenseCategory;
+  category_id: string;
   date: string; // YYYY-MM-DD format
   note?: string;
 }
@@ -29,7 +55,7 @@ export interface CreateExpenseInput {
  */
 export interface UpdateExpenseInput {
   amount?: number;
-  category?: ExpenseCategory;
+  category_id?: string;
   date?: string; // YYYY-MM-DD format
   note?: string;
 }
