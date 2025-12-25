@@ -1,437 +1,161 @@
 # CLAUDE.md
-
+ 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
-
-## Repository Overview
-
-This repository contains **Money Tracker** (家計簿アプリ), a minimalist expense tracking application with the concept: **"3つの機能だけ。続けられる家計簿"** (Only 3 features. An expense tracker you can stick with).
-
-### Application Concept
-
-A simple expense tracking app focused on three core features:
-1. **Expense Recording** - Quick input with amount, category, and date
-2. **Category Classification** - 9 fixed categories (no customization)
-3. **Dashboard** - Free tier shows totals, Premium tier includes detailed analytics with charts
-
-### Target Users
-
-- People who have failed with complex expense tracking apps
-- Users who want simple expense recording
-- Individuals aged 20s-40s
-
-### Tech Stack
-
-- Next.js 16.0.10 (App Router)
-- React 19.2.1
-- TypeScript 5
-- Tailwind CSS 4
-- ESLint 9
-- Supabase (PostgreSQL database)
-- Clerk (authentication + billing)
-- Recharts (premium charts)
-- react-hook-form (forms)
-- date-fns (date handling)
-- lucide-react (icons)
-
-## Project Structure
-
-The main application code is in `kakeibo/`:
-
+ 
+## プロジェクト概要
+ 
+**Money Tracker** - シンプルで継続できる家計簿アプリ
+ 
+「3つの機能だけ。続けられる家計簿」をコンセプトに、支出記録、カテゴリ分け、ダッシュボード表示の必要最小限の機能で構成されています。
+ 
+## 開発ロードマップと進捗管理
+ 
+開発は`.claude/development_roadmap.md`のチェックリストに従って進めます。
+ 
+### タスク管理方法
+- 各フェーズの実装内容はチェックリスト形式で記載
+- 完了したタスクは`[ ]`を`[x]`に変更して記録
+- フェーズ1から順番に実装を進める
+ 
+```markdown
+# 実装前
+- [ ] パッケージインストール（Supabase, Clerk, shadcn/ui）
+ 
+# 実装後
+- [x] パッケージインストール（Supabase, Clerk, shadcn/ui）
 ```
-app/
-├── (auth)/              # Authentication pages
-│   ├── sign-in/[[...sign-in]]/page.tsx
-│   └── sign-up/[[...sign-up]]/page.tsx
-├── (public)/            # Public pages
-│   ├── page.tsx         # Landing page
-│   └── pricing/page.tsx # Pricing page with Clerk PricingTable
-├── dashboard/           # Protected dashboard
-│   └── page.tsx
-├── api/                 # API routes
-│   ├── expenses/
-│   │   ├── route.ts     # GET (list), POST (create)
-│   │   └── [id]/route.ts # PATCH (update), DELETE
-│   └── analytics/       # Premium features
-│       ├── summary/route.ts
-│       └── chart-data/route.ts
-├── layout.tsx
-└── globals.css
-
-components/
-├── ui/                  # Shadcn UI components
-├── expenses/            # Expense-related components
-│   ├── expense-form.tsx
-│   ├── expense-list.tsx
-│   └── expense-item.tsx
-├── analytics/           # Premium analytics components
-│   ├── period-selector.tsx
-│   ├── summary-cards.tsx
-│   └── charts/
-├── layout/              # Layout components
-│   ├── header.tsx
-│   └── footer.tsx
-└── premium/
-    └── premium-gate.tsx # Premium access control
-
-lib/
-├── supabase.ts          # Supabase client utilities
-├── utils.ts             # General utilities
-├── constants.ts         # Fixed categories & constants
-└── types.ts             # TypeScript type definitions
-```
-
-TypeScript path alias `@/*` maps to the project root
-
-## Development Commands
-
-All commands should be run from the `kakeibo/` directory:
-
+ 
+## 開発コマンド
+ 
 ```bash
-npm run dev      # Start development server (http://localhost:3000)
-npm run build    # Build production bundle
-npm start        # Start production server
-npm run lint     # Run ESLint
+npm run dev         # 開発サーバー起動（Turbopack使用）
+npm run build       # プロダクションビルド
+npm start           # プロダクションサーバー起動
+npm run lint        # ESLint実行
+npm run type-check  # TypeScript型チェック
+npm install         # パッケージインストール
 ```
-
-## Design System
-
-**IMPORTANT**: All UI components and styling MUST follow the design system defined in `kakeibo/.claude/design_system.md`.
-
-Key requirements:
-
-- Use Tailwind CSS utility classes only (no custom CSS)
-- Follow WCAG accessibility standards (minimum 4.5:1 contrast ratio)
-- Use the defined color palette (blue-500, gray-900, etc.)
-- Apply proper spacing (8px base system)
-- Ensure minimum 44px touch targets for interactive elements
-- Add shadows to all interactive elements
-- Use font-semibold or higher for button text
-- Reference the design system file for detailed specifications on:
-  - Color system and contrast requirements
-  - Typography and font weights
-  - Component patterns (buttons, cards, forms, etc.)
-  - Spacing, borders, and shadows
-  - Interaction states (hover, focus, active)
-  - Responsive design breakpoints
-
-## Tailwind CSS Setup
-
-**IMPORTANT**: For Tailwind CSS v4 configuration, setup, and troubleshooting, refer to the comprehensive guide in `kakeibo/.claude/tailwind_document.md`.
-
-**Critical Requirements**:
-
-- **DO NOT** create `tailwind.config.js/ts` (v4 uses zero-configuration)
-- **USE** `@import "tailwindcss"` in CSS files (NOT `@tailwind` directives)
-- Use default Tailwind utility classes - avoid custom CSS definitions
-- Configure PostCSS with `@tailwindcss/postcss` plugin only
-
-Key topics covered in the Tailwind guide:
-
-- Zero-configuration setup for v4
-- Migration from v3 to v4 (breaking changes)
-- PostCSS configuration
-- Shadcn UI integration with v4
-- Custom theming with `@theme inline` directive
-- Common troubleshooting issues
-
-## Supabase Database
-
-**IMPORTANT**: For all Supabase-related tasks, including database setup, migrations, CRUD operations, RLS policies, and authentication integration, refer to the comprehensive guide in `kakeibo/.claude/supabase_document.md`.
-
-**Development Environment**: This project uses **方法 1 (Method 1): クラウドベース (Cloud-based)** approach. Do NOT use Docker Desktop or local Supabase setup.
-
-Key topics covered in the Supabase guide:
-
-- Development environment setup (cloud-based and local Docker)
-- Database design and migrations
-- Supabase client implementation
-- CRUD operations
-- Row Level Security (RLS)
-- Real-time features
-- File storage
-- Production deployment
-- Troubleshooting
-
-### Supabase Commands
-
-```bash
-# Create a new migration file
-npx supabase migration new <migration_name>
-
-# Login to Supabase (required before linking)
-npx supabase login
-
-# Link to cloud project
-npx supabase link --project-ref <project_id>
-
-# Push migrations to cloud
-npx supabase db push
-
-# Check migration status
-npx supabase migration list
-
-# Generate TypeScript types from database schema
-npx supabase gen types typescript > lib/database.types.ts
-```
-
-## Authentication, Subscription & Payment
-
-**IMPORTANT**: For all authentication, subscription, and payment-related tasks, refer to the comprehensive guide in `kakeibo/.claude/clerk_document.md`.
-
-Key topics covered in the Clerk guide:
-
-- Authentication implementation with Clerk
-- User management and profiles
-- Subscription plans and pricing
-- Payment processing integration
-- Protected routes and middleware
-- Webhook handling
-- Role-based access control
-
-## Clerk & Supabase Integration
-
-**IMPORTANT**: For tasks involving both Clerk authentication and Supabase database access, especially Row Level Security (RLS) implementation, refer to the comprehensive integration guide in `kakeibo/.claude/clerk_superbase_integration_document.md`.
-
-**Recommended Approach**: Use **Service Role Key with Server-Side Filtering** for most reliable implementation across all environments.
-
-Key topics covered in the integration guide:
-
-- RLS integration strategies (Custom Header vs JWT vs Service Role)
-- Environment-specific implementations (Cloud-based vs Docker CLI)
-- User ID format handling (Clerk String vs Supabase UUID)
-- Security best practices for API Routes
-- Troubleshooting common RLS issues
-- Production deployment checklist
-
-## Application Features
-
-### Free Tier
-- Unlimited expense recording
-- Weekly and monthly total display
-- Expense history viewing and editing
-- Fixed 9 categories (cannot be customized)
-
-### Premium Tier ($10/month)
-- All free tier features
-- Advanced analytics dashboard
-- Period switching (daily/weekly/monthly)
-- Historical comparison (today vs yesterday, this week vs last week, etc.)
-- Category-wise detailed graphs (pie chart, bar chart)
-- Spending trend visualization
-- Premium UI with animations and gradients
-
-### Fixed Categories (Non-customizable)
-
-The app uses exactly 9 fixed expense categories:
-
-1. 食費 (Food)
-2. 日用品 (Daily necessities)
-3. 交通費 (Transportation)
-4. 娯楽 (Entertainment)
-5. 衣服・美容 (Clothing & Beauty)
-6. 医療・健康 (Medical & Health)
-7. 住居費 (Housing)
-8. 通信費 (Communication)
-9. その他 (Others)
-
-**IMPORTANT**: These categories are fixed and cannot be added, removed, or modified by users. Always use this exact list.
-
-## Database Schema
-
-### expenses table
-
-```sql
-CREATE TABLE expenses (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  user_id TEXT NOT NULL,              -- Clerk user ID (string format)
-  amount NUMERIC NOT NULL,             -- Expense amount
-  category TEXT NOT NULL,              -- One of the 9 fixed categories
-  date DATE NOT NULL,                  -- Date of expense
-  note TEXT,                           -- Optional note
-  created_at TIMESTAMP DEFAULT NOW(),
-  updated_at TIMESTAMP DEFAULT NOW()
-);
-
--- Indexes for performance
-CREATE INDEX idx_expenses_user_id ON expenses(user_id);
-CREATE INDEX idx_expenses_date ON expenses(date);
-CREATE INDEX idx_expenses_category ON expenses(category);
-
--- RLS policies (Row Level Security)
-ALTER TABLE expenses ENABLE ROW LEVEL SECURITY;
-
--- Users can only access their own expenses
--- Implementation uses Service Role Key with server-side filtering
-```
-
-## Development Workflow
-
-### Development Roadmap
-
-Development follows the phased approach defined in `.claude/development_roadmap.md`:
-
-**Phase 1**: Core infrastructure and authentication (✅ COMPLETED)
-**Phase 2**: Expense management features
-**Phase 3**: Dashboard and basic UI
-**Phase 4**: Premium features
-**Phase 5**: Deployment
-
-### Task Management
-
-When working on tasks, update the TODO list in `.claude/development_roadmap.md`:
-- Mark as `[x]` when completed
-- Keep checklist updated to track progress
-
-### Important Implementation Rules
-
-**DO**:
-- ✅ Use Service Role Key with server-side filtering for RLS (recommended approach)
-- ✅ Create user records on first expense entry (not via Clerk webhooks)
-- ✅ Use Clerk's `has()` function to check premium subscription status
-- ✅ Set premium plan slug as "premium" in Clerk Billing
-- ✅ Keep categories fixed - no user customization
-- ✅ Use Server Components by default, Client Components only when needed
-- ✅ Follow the design system strictly (`.claude/design_system.md`)
-- ✅ Keep expense recording under 1 second response time
-
-**DON'T**:
-- ❌ Don't use Clerk webhooks for user management
-- ❌ Don't allow users to add/modify categories
-- ❌ Don't use Docker Desktop for Supabase (use cloud-based approach)
-- ❌ Don't write tests (this is an MVP project)
-- ❌ Don't create custom CSS (use Tailwind utilities only)
-- ❌ Don't use `tailwind.config.js` (Tailwind v4 is zero-config)
-- ❌ Don't over-engineer - keep it simple and focused
-
-### Environment Variables
-
-Required environment variables in `.env.local`:
-
-```bash
-# Clerk Authentication
-NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
-CLERK_SECRET_KEY=
+ 
+## 環境設定
+ 
+### 必要な環境変数（.env.local）
+ 
+以下は設定済みとする。
+ 
+```env
+# Supabase
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
+ 
+# Clerk
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
+CLERK_SECRET_KEY=your_clerk_secret_key
+ 
 NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
 NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
-
-# Supabase Database
-NEXT_PUBLIC_SUPABASE_URL=
-NEXT_PUBLIC_SUPABASE_ANON_KEY=
-SUPABASE_SERVICE_ROLE_KEY=
+NEXT_PUBLIC_CLERK_SIGN_IN_FALLBACK_REDIRECT_URL=/dashboard
+NEXT_PUBLIC_CLERK_SIGN_UP_FALLBACK_REDIRECT_URL=/dashboard
+ 
+# Billing Portal URL
+NEXT_PUBLIC_BILLING_URL=https://accounts.your-domain.com/user
 ```
-
-### Premium Feature Implementation
-
-To check if a user has premium access:
-
-```typescript
-import { auth } from '@clerk/nextjs';
-
-// In Server Component or API Route
-const { has } = await auth();
-const isPremium = has({ permission: 'org:premium' }) || has({ role: 'premium' });
-
-// Or using Clerk's plan checking
-const isPremium = await auth().then(({ userId }) =>
-  // Check via Clerk's billing API or has() function
-);
+ 
+## プロジェクト構造
+ 
 ```
-
-Wrap premium features with access control:
-- Show upgrade CTA for free users
-- Display analytics and charts only for premium users
-- Use `<PremiumGate>` component for conditional rendering
-
-## Architecture
-
-### Middleware Configuration
-
-The `middleware.ts` file configures route protection:
-
-```typescript
-import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
-
-const isPublicRoute = createRouteMatcher([
-  '/',
-  '/sign-in(.*)',
-  '/sign-up(.*)',
-  '/pricing',
-]);
-
-export default clerkMiddleware(async (auth, request) => {
-  if (!isPublicRoute(request)) {
-    await auth.protect();
-  }
-});
+my-app/
+├── src/
+│   ├── app/                    # App Router
+│   │   ├── (auth)/            # 認証関連ページ
+│   │   ├── (dashboard)/       # ダッシュボード（認証必須）
+│   │   ├── api/               # API Routes
+│   │   └── layout.tsx         # ルートレイアウト
+│   ├── components/            # 共通コンポーネント
+│   ├── lib/                   # ユーティリティ、設定
+│   └── types/                 # TypeScript型定義
+├── .claude/                   # プロジェクトドキュメント
+│   ├── requirements.md        # 要件定義書
+│   ├── development_roadmap.md # 開発ロードマップ（進捗管理）
+│   ├── design_system.md       # デザインシステム
+│   ├── supabase_document.md   # Supabase実装ガイド
+│   ├── clerk_document.md      # Clerk実装ガイド
+│   └── clerk_supabase_integration_document.md
+└── public/                    # 静的ファイル
 ```
+ 
+## アーキテクチャ
+ 
+### 技術スタック
+- **フレームワーク**: Next.js 15 系 (App Router)
+- **言語**: TypeScript（strictモード）
+- **スタイリング**: Tailwind CSS v4 + shadcn/ui
+- **認証**: Clerk（メール認証、課金管理）
+- **データベース**: Supabase（PostgreSQL）
+- **ホスティング**: Vercel
+ 
+### 主要な実装方針
+- **Supabase**: クラウド版を使用（Dockerは使用しない）
+- **認証連携**: API Routes経由でSupabaseにアクセス（Service Roleキー使用）
+- **課金**: Clerk Billingでプラン管理（スラグ: "premium"）
+- **テスト**: MVP目的のためテストは書かない
+- **品質管理**: タスク完了前に必ずlintと型チェックを実行
+ 
+## 重要なドキュメント
+ 
+### 要件定義
+`.claude/requirements.md` - プロジェクトの詳細な要件定義
+ 
+### 開発ロードマップ
+`.claude/development_roadmap.md` - 5つのフェーズで構成される開発計画と進捗管理
+ 
+### デザインシステム
+`.claude/design_system.md` - UIコンポーネントのデザインガイドライン
+ 
+### 実装ガイド
+- `.claude/supabase_document.md` - Supabase実装方法（方法1を採用）
+- `.claude/clerk_document.md` - Clerk認証・課金の実装
+- `.claude/clerk_supabase_integration_document.md` - 認証連携の実装
+ 
+## コーディング規約
+ 
+### TypeScript
+- パスエイリアス: `@/*` → `src/*`
+- 型定義は`src/types/`に集約
+- strictモードを維持
+ 
+### コンポーネント
+- 関数コンポーネントで統一
+- shadcn/uiコンポーネントを優先使用
+- デザインシステムに従ったスタイリング
+ 
+### git管理
+- 各フェーズ完了時にコミット
+- 意味のある単位でコミットメッセージを記述
+ 
+## 開発時の注意事項
+ 
+- Clerk Billingのプランスラグは必ず「premium」に設定
+- user_idフィールドはTEXT型（ClerkのID形式に対応）
+- 環境変数は`.env.local`に正しく記載されている前提で進め、必要に応じ example ファイルを作成
+  - `.env.local` を Claude Code が読み込むことは絶対に避ける
+- デザインシステム（`.claude/design_system.md`）を厳守
+ 
+## 開発の流れ
 
-- Public routes: `/`, `/sign-in`, `/sign-up`, `/pricing`
-- All other routes require authentication
-- Middleware runs on all routes except static files and Next.js internals
+1. これから行うタスクを理解する
+2. タスクに関する `.claude` 内のドキュメントの内容を理解する
+3. 設計を行う
+4. 実装を進める
+5. **タスク完了前に必ず型チェックを実行** (`npm run type-check`)
+6. 実装完了後、結果に関してユーザーに動作確認方法を伝える
 
-### Supabase Client Architecture
+### 品質チェック
 
-Two clients are configured in `lib/supabase.ts`:
+タスク完了前に以下を必ず実行してください：
 
-1. **Client-side client** (`supabase`): Uses anon key, for client components
-2. **Server-side admin client** (`supabaseAdmin`): Uses service role key, bypasses RLS
-
-Helper functions for CRUD operations:
-- `getExpensesForUser(userId)` - Fetch user's expenses
-- `createExpenseForUser(userId, data)` - Create expense
-- `updateExpenseForUser(userId, id, updates)` - Update expense
-- `deleteExpenseForUser(userId, id)` - Delete expense
-
-All helpers include user ID filtering for security.
-
-## Development Plan
-
-For a comprehensive development roadmap, see `.claude/development_roadmap.md`. The plan includes:
-
-- **Phase 1-3**: Setup, database, and core infrastructure
-- **Phase 4-7**: Public pages, expense recording, and basic dashboard
-- **Phase 8-10**: Premium analytics, UI polish, and billing
-- **Phase 11-12**: Testing and deployment
-
-### Using the Development Plan
-
-**IMPORTANT**: When working on tasks, always update the TODO list in `.claude/development_roadmap.md`:
-
-1. **Mark as WIP**: Change `- [ ]` to `- [WIP]` when you start working on a task
-2. **Mark as complete**: Change `- [WIP]` to `- [x]` when the task is finished
-3. **Track progress**: This helps maintain clear visibility of what's done, in-progress, and remaining
-
-Example workflow:
-```markdown
-# Not started
-- [ ] Install Clerk SDK for authentication
-
-# Working on it
-- [WIP] Install Clerk SDK for authentication
-
-# Completed
-- [x] Install Clerk SDK for authentication
+```bash
+npm run type-check  # TypeScript型チェック
+npm run lint        # ESLint
+npm run build       # プロダクションビルド確認
 ```
-
-**Benefits**:
-- Clear progress tracking across all phases
-- Easy to see what's actively being worked on
-- Easy to resume work after breaks
-- Provides accountability and transparency
-
-## Configuration
-
-- `tsconfig.json` - TypeScript configuration with strict mode enabled, target ES2017
-- `next.config.ts` - Next.js configuration
-- `eslint.config.mjs` - ESLint configuration
-- `postcss.config.mjs` - PostCSS configuration for Tailwind CSS
-
-## Reference Documentation
-
-- **Requirements**: `.claude/requirment.md` - Complete feature specifications
-- **Development Plan**: `.claude/development_roadmap.md` - Phase-by-phase implementation guide
-- **Design System**: `.claude/design_system.md` - UI/UX guidelines
-- **Tailwind Guide**: `.claude/tailwind_document.md` - Tailwind CSS v4 setup
-- **Supabase Guide**: `.claude/supabase_document.md` - Database operations
-- **Clerk Guide**: `.claude/clerk_document.md` - Authentication & billing
-- **Integration Guide**: `.claude/clerk_superbase_integration_document.md` - Clerk + Supabase RLS
