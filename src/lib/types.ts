@@ -1,5 +1,8 @@
 import { ExpenseCategory } from './constants';
 
+// ExpenseCategoryを再エクスポート
+export type { ExpenseCategory };
+
 /**
  * ユーザー（データベーススキーマ）
  */

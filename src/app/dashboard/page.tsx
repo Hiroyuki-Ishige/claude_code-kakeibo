@@ -1,23 +1,31 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@clerk/nextjs';
 import { Header } from '@/components/layout/header';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { ExpenseForm } from '@/components/expense-form';
+import { ExpenseList } from '@/components/expense-list';
+import { DashboardSummary } from '@/components/dashboard-summary';
+import { CategoryBreakdown } from '@/components/category-breakdown';
 import { useLanguage } from '@/contexts/language-context';
 
 export default function DashboardPage() {
   const { userId, isLoaded } = useAuth();
   const router = useRouter();
   const { t } = useLanguage();
+  const [refreshTrigger, setRefreshTrigger] = useState(0);
 
   useEffect(() => {
     if (isLoaded && !userId) {
       router.push('/sign-in');
     }
   }, [isLoaded, userId, router]);
+
+  const handleExpenseCreated = () => {
+    setRefreshTrigger((prev) => prev + 1);
+  };
 
   if (!isLoaded || !userId) {
     return null;
@@ -37,61 +45,39 @@ export default function DashboardPage() {
             </p>
           </div>
 
-          {/* Summary Cards */}
-          <div className="mb-8 grid gap-6 md:grid-cols-2">
-            <Card>
-              <CardHeader>
-                <CardTitle>{t('dashboard.thisWeek.title')}</CardTitle>
-                <CardDescription>{t('dashboard.thisWeek.description')}</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-3xl font-bold text-gray-900">¥0</p>
-                <p className="mt-2 text-sm text-gray-600">
-                  {t('dashboard.noExpenses')}
-                </p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader>
-                <CardTitle>{t('dashboard.thisMonth.title')}</CardTitle>
-                <CardDescription>{new Date().getMonth() + 1}月</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-3xl font-bold text-gray-900">¥0</p>
-                <p className="mt-2 text-sm text-gray-600">
-                  {t('dashboard.noExpenses')}
-                </p>
-              </CardContent>
-            </Card>
+          {/* Main Layout - Left Content + Right Sidebar */}
+          <div className="grid gap-8 lg:grid-cols-4">
+            {/* Left Column - Main Content */}
+            <div className="lg:col-span-3 space-y-8">
+              {/* Summary Cards */}
+              <div className="grid gap-6 md:grid-cols-2">
+                <DashboardSummary refreshTrigger={refreshTrigger} />
+              </div>
+
+              {/* Category Breakdown */}
+              <CategoryBreakdown refreshTrigger={refreshTrigger} />
+
+              {/* Expense List */}
+              <ExpenseList refreshTrigger={refreshTrigger} />
+            </div>
+
+            {/* Right Sidebar - Expense Form */}
+            <div className="lg:col-span-1">
+              <div className="sticky top-8">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>{t('dashboard.recordExpense.title')}</CardTitle>
+                    <CardDescription>
+                      {t('dashboard.recordExpense.description')}
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <ExpenseForm onSuccess={handleExpenseCreated} />
+                  </CardContent>
+                </Card>
+              </div>
+            </div>
           </div>
-
-          {/* Expense Form */}
-          <Card className="mb-8">
-            <CardHeader>
-              <CardTitle>{t('dashboard.recordExpense.title')}</CardTitle>
-              <CardDescription>
-                {t('dashboard.recordExpense.description')}
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <ExpenseForm />
-            </CardContent>
-          </Card>
-
-          {/* Recent Expenses Placeholder */}
-          <Card>
-            <CardHeader>
-              <CardTitle>{t('dashboard.recentExpenses.title')}</CardTitle>
-              <CardDescription>
-                {t('dashboard.recentExpenses.description')}
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p className="text-center text-gray-500 py-8">
-                支出履歴はフェーズ2で実装予定です
-              </p>
-            </CardContent>
-          </Card>
         </div>
       </main>
     </div>

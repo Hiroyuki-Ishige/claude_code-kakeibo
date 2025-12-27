@@ -22,9 +22,6 @@ export function Header() {
           <nav className="flex items-center space-x-4">
             <LanguageToggle />
             <SignedIn>
-              <Link href="/dashboard">
-                <Button variant="ghost">{t('header.dashboard')}</Button>
-              </Link>
               <UserButton
                 appearance={{
                   elements: {
