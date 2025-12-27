@@ -8,9 +8,10 @@ import { Spinner } from '@/components/ui/spinner';
 
 interface ExpenseListProps {
   refreshTrigger?: number;
+  onSuccess?: () => void;
 }
 
-export function ExpenseList({ refreshTrigger }: ExpenseListProps) {
+export function ExpenseList({ refreshTrigger, onSuccess }: ExpenseListProps) {
   const [expenses, setExpenses] = useState<Expense[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -44,12 +45,14 @@ export function ExpenseList({ refreshTrigger }: ExpenseListProps) {
   // オプティミスティックUI: 削除時に即座にUIから削除
   const handleDelete = useCallback((id: string) => {
     setExpenses((prev) => prev.filter((expense) => expense.id !== id));
-  }, []);
+    onSuccess?.(); // 親コンポーネントに通知
+  }, [onSuccess]);
 
   // 更新時にデータを再取得
   const handleUpdate = useCallback(() => {
     fetchExpenses();
-  }, [fetchExpenses]);
+    onSuccess?.(); // 親コンポーネントに通知
+  }, [fetchExpenses, onSuccess]);
 
   // ローディング状態
   if (isLoading) {

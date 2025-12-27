@@ -58,7 +58,7 @@ export default function DashboardPage() {
               <CategoryBreakdown refreshTrigger={refreshTrigger} />
 
               {/* Expense List */}
-              <ExpenseList refreshTrigger={refreshTrigger} />
+              <ExpenseList refreshTrigger={refreshTrigger} onSuccess={handleExpenseCreated} />
             </div>
 
             {/* Right Sidebar - Expense Form */}
