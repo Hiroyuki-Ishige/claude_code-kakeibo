@@ -10,6 +10,7 @@ import { ExpenseList } from '@/components/expense-list';
 import { DashboardSummary } from '@/components/dashboard-summary';
 import { CategoryBreakdown } from '@/components/category-breakdown';
 import { useLanguage } from '@/contexts/language-context';
+import { UpgradeBanner } from '@/components/upgrade-banner';
 
 export default function DashboardPage() {
   const { userId, isLoaded } = useAuth();
@@ -44,6 +45,9 @@ export default function DashboardPage() {
               {t('dashboard.description')}
             </p>
           </div>
+
+          {/* Upgrade Banner */}
+          <UpgradeBanner />
 
           {/* Main Layout - Left Content + Right Sidebar */}
           <div className="grid gap-8 lg:grid-cols-4">

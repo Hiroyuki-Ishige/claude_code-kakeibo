@@ -7,6 +7,7 @@ import { Footer } from '@/components/layout/footer';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useLanguage } from '@/contexts/language-context';
+import { DynamicPricingTable } from '@/components/pricing/dynamic-pricing-table';
 
 export default function PricingPage() {
   const { t } = useLanguage();
@@ -135,6 +136,23 @@ export default function PricingPage() {
                   </Link>
                 </CardContent>
               </Card>
+            </div>
+          </div>
+        </section>
+
+        {/* Clerk PricingTable Section */}
+        <section className="py-20 bg-gradient-to-br from-gray-50 to-white">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold text-gray-900 mb-4">
+                サブスクリプションを開始
+              </h2>
+              <p className="text-lg text-gray-600">
+                安全な決済システムで、今すぐプレミアムプランに登録できます
+              </p>
+            </div>
+            <div className="max-w-5xl mx-auto">
+              <DynamicPricingTable />
             </div>
           </div>
         </section>

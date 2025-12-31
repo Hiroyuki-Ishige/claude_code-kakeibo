@@ -94,6 +94,34 @@ my-app/
 - **データベース**: Supabase（PostgreSQL）
 - **ホスティング**: Vercel
  
+### アーキテクチャ概要
+
+#### データフロー
+```
+User → Clerk認証 → Next.js API Routes → Supabase (RLS有効)
+                                    ↓
+                        ClerkのuserIdでデータ分離
+```
+
+#### 状態管理パターン
+- **refreshTriggerパターン**: 親コンポーネントから子への再取得通知
+  - `dashboard/page.tsx`が中心的な状態管理を担当
+  - 支出の作成・更新・削除時に`refreshTrigger`をインクリメント
+  - 子コンポーネント（ExpenseList、DashboardSummary、CategoryBreakdown）が自動更新
+
+#### API Routes構造
+```
+/api/expenses
+  GET    - 支出一覧取得（認証ユーザーのデータのみ）
+  POST   - 支出作成
+
+/api/expenses/[id]
+  PUT    - 支出更新
+  DELETE - 支出削除
+```
+
+全APIでClerk認証チェックとSupabase Service Role Key使用
+
 ### 主要な実装方針
 - **Supabase**: クラウド版を使用（Dockerは使用しない）
 - **認証連携**: API Routes経由でSupabaseにアクセス（Service Roleキー使用）

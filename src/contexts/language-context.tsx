@@ -19,7 +19,11 @@ const translations: Record<Language, Record<string, string>> = {
     'header.login': 'ログイン',
     'header.signup': '無料で始める',
     'header.dashboard': 'ダッシュボード',
+    'header.analytics': '分析',
+    'header.pricing': '料金',
     'header.appName': 'Money Tracker',
+    'header.plan.free': '無料プラン',
+    'header.plan.premium': 'プレミアム',
 
     // Home Page - Hero
     'home.hero.title1': '3つの機能だけ。',
@@ -78,13 +82,67 @@ const translations: Record<Language, Record<string, string>> = {
     'dashboard.recordExpense.description': '日々の支出を記録しましょう',
     'dashboard.recentExpenses.title': '最近の支出',
     'dashboard.recentExpenses.description': '最新の支出履歴を表示',
+
+    // Analytics Page
+    'analytics.title': 'プレミアム分析',
+    'analytics.description': 'カテゴリ別の支出をグラフで詳しく分析',
+    'analytics.pieChart.title': 'カテゴリ別割合',
+    'analytics.barChart.title': 'カテゴリ別金額',
+    'analytics.lineChart.title': '月別支出推移',
+    'analytics.selectedMonth': '選択中',
+    'analytics.showAllMonths': '全期間を表示',
+    'analytics.clickToSelect': 'ドットをクリックして月を選択（再クリックで解除）',
+    'analytics.noData': 'データがありません',
+
+    // Analytics Guide
+    'analytics.guide.title': '分析機能の使い方',
+    'analytics.guide.monthly.title': '月別支出推移',
+    'analytics.guide.monthly.item1': '過去12ヶ月の支出推移を折れ線グラフで表示',
+    'analytics.guide.monthly.item2': 'ドットをクリックして特定の月を選択できます',
+    'analytics.guide.monthly.item3': '月を選択すると、その月のデータだけを下のグラフで確認できます',
+    'analytics.guide.weekly.title': '週別支出推移',
+    'analytics.guide.weekly.item1': '過去8週間の支出推移を棒グラフで表示',
+    'analytics.guide.weekly.item2': '月を選択している場合は、その月内の週別データを表示',
+    'analytics.guide.category.title': 'カテゴリ別分析',
+    'analytics.guide.category.item1': '円グラフで各カテゴリの割合を確認',
+    'analytics.guide.category.item2': '棒グラフで各カテゴリの金額を比較',
+    'analytics.guide.tip.title': '使い方のヒント',
+    'analytics.guide.tip.description': '月別グラフで特定の月を選択すると、週別・カテゴリ別グラフがその月のデータだけに絞り込まれます。より詳しく分析したい月をクリックしてみましょう。',
+
+    // Period Switcher
+    'analytics.period.label': '期間',
+    'analytics.period.daily': '日次',
+    'analytics.period.weekly': '週次',
+    'analytics.period.monthly': '月次',
+
+    // Period Comparison
+    'analytics.comparison.title': '前期間比較',
+    'analytics.comparison.today': '今日',
+    'analytics.comparison.yesterday': '昨日',
+    'analytics.comparison.thisWeek': '今週',
+    'analytics.comparison.lastWeek': '先週',
+    'analytics.comparison.thisMonth': '今月',
+    'analytics.comparison.lastMonth': '先月',
+    'analytics.comparison.difference': '差額',
+    'analytics.comparison.noChange': '変化なし',
+    'analytics.comparison.increaseMessage': '前期間より支出が増えています',
+    'analytics.comparison.decreaseMessage': '前期間より支出が減っています',
+
+    // Category Charts Period Label
+    'analytics.category.period.daily': '今日',
+    'analytics.category.period.weekly': '今週',
+    'analytics.category.period.monthly': '今月',
   },
   en: {
     // Header
     'header.login': 'Login',
     'header.signup': 'Get Started Free',
     'header.dashboard': 'Dashboard',
+    'header.analytics': 'Analytics',
+    'header.pricing': 'Pricing',
     'header.appName': 'Money Tracker',
+    'header.plan.free': 'Free Plan',
+    'header.plan.premium': 'Premium',
 
     // Home Page - Hero
     'home.hero.title1': 'Just 3 Features.',
@@ -143,6 +201,56 @@ const translations: Record<Language, Record<string, string>> = {
     'dashboard.recordExpense.description': 'Track your daily expenses',
     'dashboard.recentExpenses.title': 'Recent Expenses',
     'dashboard.recentExpenses.description': 'Latest expense history',
+
+    // Analytics Page
+    'analytics.title': 'Premium Analytics',
+    'analytics.description': 'Detailed analysis of expenses by category',
+    'analytics.pieChart.title': 'Category Breakdown',
+    'analytics.barChart.title': 'Category Amounts',
+    'analytics.lineChart.title': 'Monthly Expense Trend',
+    'analytics.selectedMonth': 'Selected',
+    'analytics.showAllMonths': 'Show All Months',
+    'analytics.clickToSelect': 'Click dot to select month (click again to deselect)',
+    'analytics.noData': 'No data available',
+
+    // Analytics Guide
+    'analytics.guide.title': 'How to Use Analytics',
+    'analytics.guide.monthly.title': 'Monthly Expense Trend',
+    'analytics.guide.monthly.item1': 'View expense trends for the past 12 months in a line chart',
+    'analytics.guide.monthly.item2': 'Click on a dot to select a specific month',
+    'analytics.guide.monthly.item3': 'When a month is selected, the charts below will show data for that month only',
+    'analytics.guide.weekly.title': 'Weekly Expense Trend',
+    'analytics.guide.weekly.item1': 'View expense trends for the past 8 weeks in a bar chart',
+    'analytics.guide.weekly.item2': 'If a month is selected, shows weekly data within that month',
+    'analytics.guide.category.title': 'Category Analysis',
+    'analytics.guide.category.item1': 'View the proportion of each category in a pie chart',
+    'analytics.guide.category.item2': 'Compare amounts across categories in a bar chart',
+    'analytics.guide.tip.title': 'Tip',
+    'analytics.guide.tip.description': 'Selecting a specific month in the monthly chart will filter the weekly and category charts to show only that month\'s data. Try clicking on a month you want to analyze in detail.',
+
+    // Period Switcher
+    'analytics.period.label': 'Period',
+    'analytics.period.daily': 'Daily',
+    'analytics.period.weekly': 'Weekly',
+    'analytics.period.monthly': 'Monthly',
+
+    // Period Comparison
+    'analytics.comparison.title': 'Period Comparison',
+    'analytics.comparison.today': 'Today',
+    'analytics.comparison.yesterday': 'Yesterday',
+    'analytics.comparison.thisWeek': 'This Week',
+    'analytics.comparison.lastWeek': 'Last Week',
+    'analytics.comparison.thisMonth': 'This Month',
+    'analytics.comparison.lastMonth': 'Last Month',
+    'analytics.comparison.difference': 'Difference',
+    'analytics.comparison.noChange': 'No Change',
+    'analytics.comparison.increaseMessage': 'Expenses increased from previous period',
+    'analytics.comparison.decreaseMessage': 'Expenses decreased from previous period',
+
+    // Category Charts Period Label
+    'analytics.category.period.daily': 'Today',
+    'analytics.category.period.weekly': 'This Week',
+    'analytics.category.period.monthly': 'This Month',
   },
 };
 

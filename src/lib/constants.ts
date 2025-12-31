@@ -47,6 +47,21 @@ export const CATEGORY_COLORS: Record<ExpenseCategory, string> = {
 };
 
 /**
+ * カテゴリごとの色（Recharts用の16進数カラーコード）
+ */
+export const CATEGORY_CHART_COLORS: Record<ExpenseCategory, string> = {
+  食費: '#f97316',
+  日用品: '#22c55e',
+  交通費: '#3b82f6',
+  娯楽: '#a855f7',
+  '衣服・美容': '#ec4899',
+  '医療・健康': '#ef4444',
+  住居費: '#eab308',
+  通信費: '#06b6d4',
+  その他: '#6b7280',
+};
+
+/**
  * プレミアムプランのスラグ
  */
 export const PREMIUM_PLAN_SLUG = 'premium';
