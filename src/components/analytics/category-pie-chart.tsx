@@ -33,8 +33,8 @@ export function CategoryPieChart({ expenses, periodType }: CategoryPieChartProps
   // 支出がない場合
   if (chartData.length === 0) {
     return (
-      <Card className="bg-white border border-gray-300 rounded-2xl shadow-md">
-        <CardHeader>
+      <Card className="bg-white border-2 border-purple-200 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 animate-in fade-in slide-in-from-bottom-4">
+        <CardHeader className="bg-gradient-to-br from-purple-50 to-blue-50 rounded-t-2xl">
           <CardTitle className="text-lg font-semibold text-gray-900">
             {t('analytics.pieChart.title')}
             <span className="text-sm font-normal text-gray-600 ml-2">({periodLabel})</span>
@@ -50,8 +50,8 @@ export function CategoryPieChart({ expenses, periodType }: CategoryPieChartProps
   }
 
   return (
-    <Card className="bg-white border border-gray-300 rounded-2xl shadow-md">
-      <CardHeader>
+    <Card className="bg-white border-2 border-purple-200 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 animate-in fade-in slide-in-from-bottom-4 hover:scale-[1.02]">
+      <CardHeader className="bg-gradient-to-br from-purple-50 to-blue-50 rounded-t-2xl">
         <CardTitle className="text-lg font-semibold text-gray-900">
           {t('analytics.pieChart.title')}
           <span className="text-sm font-normal text-gray-600 ml-2">({periodLabel})</span>

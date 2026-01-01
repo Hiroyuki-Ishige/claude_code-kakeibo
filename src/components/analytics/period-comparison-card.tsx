@@ -38,25 +38,25 @@ export function PeriodComparisonCard({ comparison, periodType }: PeriodCompariso
   const hasChange = difference !== 0;
 
   return (
-    <Card className="bg-white border border-gray-300 rounded-2xl shadow-md">
-      <CardHeader>
+    <Card className="bg-white border-2 border-purple-200 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 animate-in fade-in slide-in-from-bottom-4 delay-150">
+      <CardHeader className="bg-gradient-to-br from-purple-50 via-blue-50 to-pink-50 rounded-t-2xl">
         <CardTitle className="text-lg font-semibold text-gray-900">
           {t('analytics.comparison.title')}
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
         {/* 現在期間 */}
-        <div className="flex items-center justify-between p-4 bg-blue-50 rounded-lg">
+        <div className="flex items-center justify-between p-4 bg-gradient-to-br from-blue-100 to-blue-50 rounded-lg shadow-sm hover:shadow-md transition-all duration-200">
           <div>
-            <p className="text-sm text-gray-600">{labels.current}</p>
-            <p className="text-2xl font-bold text-gray-900">{formatCurrency(currentAmount)}</p>
+            <p className="text-sm font-medium text-blue-800">{labels.current}</p>
+            <p className="text-2xl font-bold text-blue-900">{formatCurrency(currentAmount)}</p>
           </div>
         </div>
 
         {/* 前期間 */}
-        <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+        <div className="flex items-center justify-between p-4 bg-gradient-to-br from-gray-100 to-gray-50 rounded-lg shadow-sm hover:shadow-md transition-all duration-200">
           <div>
-            <p className="text-sm text-gray-600">{labels.previous}</p>
+            <p className="text-sm font-medium text-gray-600">{labels.previous}</p>
             <p className="text-xl font-semibold text-gray-700">{formatCurrency(previousAmount)}</p>
           </div>
         </div>

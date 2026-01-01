@@ -33,9 +33,9 @@ export function PeriodSwitcher({ selectedPeriod, onPeriodChange }: PeriodSwitche
   ];
 
   return (
-    <Card className="bg-white border border-gray-300 rounded-2xl shadow-md p-4">
+    <Card className="bg-gradient-to-r from-white to-blue-50 border-2 border-blue-200 rounded-2xl shadow-lg p-4 animate-in fade-in slide-in-from-top-4 hover:shadow-xl transition-all duration-300">
       <div className="flex items-center gap-2">
-        <span className="text-sm font-medium text-gray-700">
+        <span className="text-sm font-semibold text-gray-800">
           {t('analytics.period.label')}:
         </span>
         <div className="flex gap-2">
@@ -47,8 +47,8 @@ export function PeriodSwitcher({ selectedPeriod, onPeriodChange }: PeriodSwitche
               onClick={() => onPeriodChange(period.type)}
               className={
                 selectedPeriod === period.type
-                  ? 'bg-blue-600 text-white hover:bg-blue-700 shadow-md'
-                  : 'text-gray-700 hover:bg-gray-100'
+                  ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:from-blue-700 hover:to-purple-700 shadow-lg transition-all duration-200 scale-105'
+                  : 'text-gray-700 hover:bg-blue-50 hover:text-blue-700 transition-all duration-200'
               }
             >
               <span className="flex items-center gap-2">

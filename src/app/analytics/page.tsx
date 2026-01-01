@@ -99,15 +99,19 @@ export default function AnalyticsPage() {
     <div className="flex min-h-screen flex-col">
       <Header />
 
-      <main className="flex-1 bg-gray-50">
-        <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+      <main className="flex-1 bg-gradient-to-br from-blue-50 via-white to-purple-50 relative">
+        {/* Premium Background Pattern */}
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiMzQjgyRjYiIGZpbGwtb3BhY2l0eT0iMC4wMyI+PHBhdGggZD0iTTM2IDM0djItaDJ2LTJoLTJ6bTAgNHYyaDJ2LTJoLTJ6bS0yIDJ2Mmgydi0yaC0yem0wLTR2Mmgydi0yaC0yem0tMiA0djJoMnYtMmgtMnoiLz48L2c+PC9nPjwvc3ZnPg==')] opacity-40"></div>
+        <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 relative z-10">
           {/* Page Header */}
-          <div className="mb-8">
-            <div className="flex items-center gap-3 mb-2">
-              <Crown className="h-8 w-8 text-blue-600" />
-              <h1 className="text-3xl font-bold text-gray-900">{t('analytics.title')}</h1>
+          <div className="mb-6 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-5 shadow-xl border border-blue-200">
+            <div className="flex items-center gap-2 mb-2">
+              <div className="p-2 bg-white/20 rounded-xl backdrop-blur-sm">
+                <Crown className="h-6 w-6 text-white" />
+              </div>
+              <h1 className="text-2xl font-bold text-white">{t('analytics.title')}</h1>
             </div>
-            <p className="text-gray-600">
+            <p className="text-blue-50 text-base">
               {t('analytics.description')}
             </p>
           </div>

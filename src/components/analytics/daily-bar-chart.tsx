@@ -22,8 +22,8 @@ export function DailyBarChart({ expenses }: DailyBarChartProps) {
   // 支出がない場合
   if (chartData.length === 0) {
     return (
-      <Card className="bg-white border border-gray-300 rounded-2xl shadow-md">
-        <CardHeader>
+      <Card className="bg-white border-2 border-pink-200 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 animate-in fade-in slide-in-from-right-4">
+        <CardHeader className="bg-gradient-to-br from-pink-50 via-purple-50 to-blue-50 rounded-t-2xl">
           <CardTitle className="text-lg font-semibold text-gray-900">
             {language === 'ja' ? '日別支出推移' : 'Daily Expense Trend'}
           </CardTitle>
@@ -38,8 +38,8 @@ export function DailyBarChart({ expenses }: DailyBarChartProps) {
   }
 
   return (
-    <Card className="bg-white border border-gray-300 rounded-2xl shadow-md">
-      <CardHeader>
+    <Card className="bg-white border-2 border-pink-200 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 animate-in fade-in slide-in-from-right-4 hover:scale-[1.01]">
+      <CardHeader className="bg-gradient-to-br from-pink-50 via-purple-50 to-blue-50 rounded-t-2xl">
         <CardTitle className="text-lg font-semibold text-gray-900">
           {language === 'ja' ? '日別支出推移' : 'Daily Expense Trend'}
         </CardTitle>

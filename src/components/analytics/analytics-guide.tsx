@@ -12,7 +12,7 @@ export function AnalyticsGuide() {
   const { t } = useLanguage();
 
   return (
-    <Card className="bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-2xl shadow-sm">
+    <Card className="bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 animate-in fade-in slide-in-from-top-4">
       <Collapsible open={isOpen} onOpenChange={setIsOpen}>
         <div className="p-4">
           <CollapsibleTrigger asChild>
